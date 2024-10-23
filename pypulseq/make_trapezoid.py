@@ -163,7 +163,7 @@ def make_trapezoid(
                 min_duration = rise_time + flat_time + fall_time
                 assert duration >= min_duration, (
                     f"Requested area is too large for this gradient. Minimum required duration is "
-                    f"{round(min_duration * 1e6)} us"
+                    f"{round(min_duration * 1e6)} us and duration is {round(duration *1e6)} us."
                 )
 
                 dC = 1 / abs(2 * max_slew) + 1 / abs(2 * max_slew)
