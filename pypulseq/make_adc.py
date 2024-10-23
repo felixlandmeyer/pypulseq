@@ -198,7 +198,7 @@ def calc_adc_segments(
         raise ValueError(
             f"Number of segments ({num_segments}) exceeds allowed number of {MAX_SEGMENTS}")
         
-    return num_segments, num_samples_seg
+    return int(num_segments), int(num_samples_seg)
     
 
 
