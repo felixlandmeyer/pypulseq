@@ -15,7 +15,7 @@ def make_label(
     type : str
         Label type. Must be one of 'SET' or 'INC'.
     label : str
-        Must be one of 'SLC', 'SEG', 'REP', 'AVG', 'SET', 'ECO', 'PHS', 'LIN', 'PAR', 'NAV', 'REV', or 'SMS'.
+        Must be one of "SLC", "SEG", "REP", "AVG", "SET", "ECO", "PHS", "LIN", "PAR", "NAV", "REV", "SMS", "REF", "IMA", "NOISE", "PMC", "NOROT", "NOPOS", "NOSCL", "ONCE", "TRID"
     value : bool, float or int
         Label value.
 
@@ -27,8 +27,8 @@ def make_label(
     Raises
     ------
     ValueError
-        If a valid `label` was not passed. Must be one of 'SLC', 'SEG', 'REP', 'AVG', 'SET', 'ECO', 'PHS', 'LIN', 'PAR',
-                                                                                                NAV', 'REV', or 'SMS'.
+        If a valid `label` was not passed. Must be one of:
+            "SLC", "SEG", "REP", "AVG", "SET", "ECO", "PHS", "LIN", "PAR", "NAV", "REV", "SMS", "REF", "IMA", "NOISE", "PMC", "NOROT", "NOPOS", "NOSCL", "ONCE", "TRID"
         If a valid `type` was not passed. Must be one of 'SET' or 'INC'.
         If `value` was not a valid numerical or logical value.
     """
@@ -36,8 +36,7 @@ def make_label(
 
     if label not in arr_supported_labels:
         raise ValueError(
-            "Invalid label. Must be one of 'SLC', 'SEG', 'REP', 'AVG', 'SET', 'ECO', 'PHS', 'LIN', 'PAR', "
-            "NAV', 'REV', or 'SMS'."
+            f"Invalid label. Must be one of {arr_supported_labels}."
         )
     if type not in ["SET", "INC"]:
         raise ValueError("Invalid type. Must be one of 'SET' or 'INC'.")
@@ -53,4 +52,6 @@ def make_label(
     out.label = label
     out.value = value
 
-    return out
+    return out 
+    
+    
