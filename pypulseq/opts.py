@@ -1,6 +1,40 @@
 from typing import Optional
 from pypulseq.convert import convert
+from dataclasses import dataclass
 
+# TODO: Is this really necessary?
+@dataclass
+class GradLimit:
+    """Class to store gradient limits as maximum slewrate and maximum gradient amplitude."""
+    max_grad: float
+    max_slew: float
+    grad_unit: str = 'Hz/m'
+    slew_unit: str = 'Hz/m/s'
+    gamma: float = 42576000
+
+    def __post_init__(self):
+        valid_grad_units = ["Hz/m", "mT/m", "rad/ms/mm"]
+        valid_slew_units = ["Hz/m/s", "mT/m/ms", "T/m/s", "rad/ms/mm/ms"]
+
+        if self.grad_unit not in valid_grad_units:
+            raise ValueError(
+                f"Invalid gradient unit. Must be one of {valid_grad_units}. "
+                f"Passed: {self.grad_unit}"
+            )
+
+        if self.slew_unit not in valid_slew_units:
+            raise ValueError(
+                f"Invalid slew rate unit. Must be one of {valid_slew_units}. "
+                f"Passed: {self.slew_unit}"
+            )
+
+        self.max_grad = convert(
+            from_value=self.max_grad, from_unit=self.grad_unit, to_unit="Hz/m", gamma=abs(self.gamma)
+        )
+        self.max_slew = convert(
+            from_value=self.max_slew, from_unit=self.slew_unit, to_unit="Hz/m", gamma=abs(self.gamma)
+        )
+    
 
 class Opts:
     """
