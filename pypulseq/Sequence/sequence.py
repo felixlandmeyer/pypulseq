@@ -1001,9 +1001,16 @@ class Sequence:
                 label_legend_to_plot.append(valid_labels[i])
 
         if len(label_idx_to_plot) != 0:
+            
             p = parula.main(len(label_idx_to_plot) + 1)
-            label_colors_to_plot = p(np.arange(len(label_idx_to_plot)))
-            cycler = mpl.cycler(color=label_colors_to_plot)
+            # Define a list of markers (extend if needed for large datasets)
+            markers = ['1', '2', '3', '4', '+', 'x', '|', '_']
+    
+            # Repeat markers if there are more labels than markers
+            markers_to_plot = markers * (len(label_idx_to_plot) // len(markers) + 1)
+
+            label_colors_to_plot = p(np.arange(len(label_idx_to_plot)))            
+            cycler = mpl.cycler(color=label_colors_to_plot, marker=markers_to_plot[:len(label_idx_to_plot)])
             sp11.set_prop_cycle(cycler)
 
 
@@ -1054,7 +1061,7 @@ class Sequence:
                         # Plot each label individually to retrieve each corresponding Line2D object
                         p = itertools.chain.from_iterable(
                             [
-                                sp11.plot(__t, _lbl_vals, ".")
+                                sp11.plot(__t, _lbl_vals, ls='')
                                 for __t, _lbl_vals in zip(_t, lbl_vals)
                             ]
                         )
